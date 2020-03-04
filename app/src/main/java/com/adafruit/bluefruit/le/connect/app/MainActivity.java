@@ -170,6 +170,15 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.S
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 return true;
+//            case R.id.action_aceso:
+//                fragmentManager = getSupportFragmentManager();
+//                AcesoFragment fragment = AcesoFragment.newInstance();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
+//                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
+//                        .replace(R.id.contentLayout, fragment, "AcEsO");
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

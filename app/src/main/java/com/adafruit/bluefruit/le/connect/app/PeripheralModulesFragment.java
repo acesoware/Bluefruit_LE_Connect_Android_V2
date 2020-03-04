@@ -49,7 +49,7 @@ public class PeripheralModulesFragment extends ConnectedPeripheralFragment {
     private final static int MODULE_INFO = 0;
     private final static int MODULE_UART = 1;
     private final static int MODULE_PLOTTER = 2;
-    private final static int MODULE_PINIO = 3;
+    private final static int MODULE_ACESO = 3;
     private final static int MODULE_CONTROLLER = 4;
     private final static int MODULE_NEOPIXEL = 5;
     private final static int MODULE_CALIBRATION = 6;
@@ -230,9 +230,9 @@ public class PeripheralModulesFragment extends ConnectedPeripheralFragment {
                 fragment = PlotterFragment.newInstance(singlePeripheralIdentifier);
                 break;
 
-            case MODULE_PINIO:
+            case MODULE_ACESO:
                 if (singlePeripheralIdentifier != null) {
-                    fragment = PinIOFragment.newInstance(singlePeripheralIdentifier);
+                    fragment = AcesoFragment.newInstance(singlePeripheralIdentifier);
                 }
                 break;
 
@@ -419,9 +419,9 @@ public class PeripheralModulesFragment extends ConnectedPeripheralFragment {
                             titleId = R.string.plotter_tab_title;
                             break;
 
-                        case MODULE_PINIO:
+                        case MODULE_ACESO:
                             iconDrawableId = R.drawable.tab_pinio_icon;
-                            titleId = R.string.pinio_tab_title;
+                            titleId = R.string.aceso_tab_title;
                             break;
 
                         case MODULE_CONTROLLER:
@@ -493,15 +493,14 @@ public class PeripheralModulesFragment extends ConnectedPeripheralFragment {
                 final boolean hasUart = BlePeripheralUart.hasUart(mBlePeripheral);
                 final boolean hasDfu = BlePeripheralDfu.hasDfu(mBlePeripheral);
 
-                if (hasUart && hasDfu) {
-                    return new int[]{MODULE_INFO, MODULE_UART, MODULE_PLOTTER, MODULE_PINIO, MODULE_CONTROLLER, MODULE_NEOPIXEL, MODULE_THERMALCAMERA, MODULE_IMAGETRANSFER, MODULE_DFU};
-                } else if (hasUart) {
-                    return new int[]{MODULE_INFO, MODULE_UART, MODULE_PLOTTER, MODULE_PINIO, MODULE_CONTROLLER, MODULE_THERMALCAMERA, MODULE_IMAGETRANSFER};
-                } else if (hasDfu) {
-                    return new int[]{MODULE_INFO, MODULE_DFU};
-                } else {
-                    return new int[]{MODULE_INFO};
-                }
+                return new int[]{MODULE_INFO, MODULE_UART, MODULE_PLOTTER, MODULE_ACESO};
+
+//                if (hasUart && hasDfu)
+//                    return new int[]{MODULE_INFO, MODULE_UART, MODULE_PLOTTER, MODULE_ACESO, MODULE_CONTROLLER, MODULE_NEOPIXEL, MODULE_THERMALCAMERA, MODULE_IMAGETRANSFER, MODULE_DFU};
+//                else if (hasUart)
+//                    return new int[]{MODULE_INFO, MODULE_UART, MODULE_PLOTTER, MODULE_ACESO, MODULE_CONTROLLER, MODULE_THERMALCAMERA, MODULE_IMAGETRANSFER};
+//                else if (hasDfu) return new int[]{MODULE_INFO, MODULE_DFU};
+//                else return new int[]{MODULE_INFO};
             }
         }
 
