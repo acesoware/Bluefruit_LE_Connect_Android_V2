@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.bluetooth.BluetoothGatt;
 import android.content.Context;
 import android.graphics.DashPathEffect;
+import android.media.MediaExtractor;
+import android.media.MediaFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,7 +34,9 @@ import com.adafruit.bluefruit.le.connect.style.UartStyle;
 import com.adafruit.bluefruit.le.connect.utils.DialogUtils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
@@ -43,6 +47,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import vokaturi.vokaturisdk.entities.Voice;
+import vokaturi.vokaturisdk.entities.EmotionProbabilities;
 
 
 public class AcesoFragment extends ConnectedPeripheralFragment implements UartDataManager.UartDataManagerListener {
@@ -71,6 +78,38 @@ public class AcesoFragment extends ConnectedPeripheralFragment implements UartDa
 
         // Retain this fragment across configuration changes
         setRetainInstance(true);
+
+
+//        VOKATURI STUFF HERE
+//        Might be helpful? https://github.com/alshell7/VokaturiAndroid
+
+//        We need to feed it the sample rate and such
+
+//        File file = new File("hello.wav");
+        MediaExtractor mex = new MediaExtractor();
+        try {
+            mex.setDataSource("hello.wav");// the adresss location of the sound on sdcard.
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        MediaFormat mf = mex.getTrackFormat(0);
+
+        int bitRate = mf.getInteger(MediaFormat.KEY_BIT_RATE);
+        int sampleRate = mf.getInteger(MediaFormat.KEY_SAMPLE_RATE);
+//        recording.fill();
+//        logVokMetrics(recording.extract());
+    }
+
+
+    private void logVokMetrics(EmotionProbabilities emotionProbabilities)
+    {
+        Log.i("Neutrality: ", String.valueOf(emotionProbabilities.neutrality));
+        Log.i("Happiness: ", String.valueOf(emotionProbabilities.happiness));
+        Log.i("Sadness: ", String.valueOf(emotionProbabilities.sadness));
+        Log.i("Anger: ", String.valueOf(emotionProbabilities.anger));
+        Log.i("Fear: ", String.valueOf(emotionProbabilities.fear));
     }
 
     @Override
@@ -292,7 +331,7 @@ public class AcesoFragment extends ConnectedPeripheralFragment implements UartDa
     }
 
 
-    @SuppressLint("NewApi")
+    @SuppressLint({"NewApi", "AuthLeak"})
     private Connection connectionclass(){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -300,7 +339,7 @@ public class AcesoFragment extends ConnectedPeripheralFragment implements UartDa
         String ConnectionURL;
         try{
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            ConnectionURL = "jdbc:jtds:sqlserver://aceso-test.database.windows.net:1433;DatabaseName=AcesoTest;user=aceso-test@aceso-test;password=UTAustin2020;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+            ConnectionURL = "jdbc:jtds:sqlserver://aceso-test-1.database.windows.net:1433;DatabaseName=aceso-test;user=aceso-test@aceso-test-1;password=UTAustin2020;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
             connection = DriverManager.getConnection(ConnectionURL);
         }
         catch(SQLException se){

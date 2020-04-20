@@ -29,6 +29,7 @@
     <!-- Image Transfer -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!--Vokaturi. Remove after testing-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
