@@ -85,12 +85,10 @@ public class AcesoFragment extends ConnectedPeripheralFragment implements UartDa
 
 //        We need to feed it the sample rate and such
 
-//        File file = new File("hello.wav");
         MediaExtractor mex = new MediaExtractor();
         try {
-            mex.setDataSource("hello.wav");// the adresss location of the sound on sdcard.
+            mex.setDataSource(getResources().openRawResourceFd(R.raw.hello));
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
